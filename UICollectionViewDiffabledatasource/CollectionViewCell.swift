@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-  var valueLabel = UILabel().then {
+  lazy var valueLabel = UILabel().then {
     $0.textColor = .white
     $0.font = .systemFont(ofSize: 14, weight: .medium)
     $0.numberOfLines = 0
@@ -33,7 +33,7 @@ class CollectionViewCell: UICollectionViewCell {
   
   private func setView() {
     contentView.addSubview(valueLabel)
-    contentView.backgroundColor = .black
+    contentView.backgroundColor = .darkGray
     contentView.layer.cornerRadius = 16
   }
   
