@@ -6,23 +6,67 @@
 //
 
 import UIKit
+import Combine
 
 final class ViewController: UIViewController {
   var collectionView: UICollectionView!
   
   typealias Item = Data
   var datasource: UICollectionViewDiffableDataSource<Section, Item>!
-  let sections: [Section] = Section.sections
+  
+  var subscriptions = Set<AnyCancellable>()
+  let didSelect = PassthroughSubject<IndexPath, Never>()
+  @Published var sections: [Section] = Section.sections
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setView()
     setConstraint()
+    bind()
+  }
+  
+  private func bind() {
+    didSelect
+      .receive(on: RunLoop.main)
+      .sink { [unowned self] indexPath in
+        sections[indexPath.section].datas.remove(at: indexPath.item)
+      }
+      .store(in: &subscriptions)
+    
+    $sections
+      .receive(on: RunLoop.main)
+      .sink { [unowned self] in
+        applySections($0)
+      }
+      .store(in: &subscriptions)
   }
 }
 
 extension ViewController {
-  func setView() {
+  private func setView() {
+    configureCollectionView()
+    view.addSubview(collectionView)
+  }
+  
+  private func setConstraint() {
+    collectionView.snp.makeConstraints { make in
+      make.leading.equalToSuperview().offset(0)
+      make.trailing.equalToSuperview().offset(0)
+      make.top.equalTo(view.layoutMarginsGuide.snp.top)
+      make.bottom.equalToSuperview()
+    }
+  }
+  
+  private func applySections(_ sections: [Section]) {
+    var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+    snapshot.appendSections(sections)
+    sections.forEach { section in
+      snapshot.appendItems(section.datas, toSection: section)
+    }
+    datasource.apply(snapshot)
+  }
+  
+  private func configureCollectionView() {
     collectionView = UICollectionView(frame: .zero,
                                       collectionViewLayout: makeLayout())
     collectionView.register(CollectionViewCell.self,
@@ -30,6 +74,7 @@ extension ViewController {
     collectionView.register(HeaderView.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                             withReuseIdentifier: HeaderView.identifier)
+    collectionView.delegate = self
     
     datasource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView,
                                                                    cellProvider: { collectionView, indexPath, item in
@@ -53,27 +98,9 @@ extension ViewController {
       view?.prepare(text: section.title)
       return view
     }
-    
-    var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-    snapshot.appendSections(sections)
-    sections.forEach { section in
-      snapshot.appendItems(section.datas, toSection: section)
-    }
-    datasource.apply(snapshot)
-    
-    view.addSubview(collectionView)
   }
   
-  func setConstraint() {
-    collectionView.snp.makeConstraints { make in
-      make.leading.equalToSuperview().offset(0)
-      make.trailing.equalToSuperview().offset(0)
-      make.top.equalTo(view.layoutMarginsGuide.snp.top)
-      make.bottom.equalToSuperview()
-    }
-  }
-  
-  func makeLayout() -> UICollectionViewCompositionalLayout {
+  private func makeLayout() -> UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                           heightDimension: .estimated(100))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -97,5 +124,11 @@ extension ViewController {
     
     let layout = UICollectionViewCompositionalLayout(section: section)
     return layout
+  }
+}
+
+extension ViewController: UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    didSelect.send(indexPath)
   }
 }

@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 final class HeaderView: UICollectionReusableView {
-  lazy var titleLabel = UILabel().then {
-    $0.textColor = .white
-  }
+  lazy var titleLabel = UILabel()
   
   static var identifier: String {
     return String(describing: HeaderView.self)
@@ -43,7 +41,7 @@ final class HeaderView: UICollectionReusableView {
     titleLabel.snp.makeConstraints { make in
       make.leading.equalToSuperview()
       make.trailing.equalToSuperview()
-      make.top.equalToSuperview().offset(40)
+      make.top.equalToSuperview().offset(16)
       make.bottom.equalToSuperview()
     }
   }
