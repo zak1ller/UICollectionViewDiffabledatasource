@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C8BF523421ECF395C7B688E /* Pods_UICollectionViewDiffabledatasource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A641921FBF9AE813AADE275 /* Pods_UICollectionViewDiffabledatasource.framework */; };
+		71561C7028A6457D00AB6289 /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71561C6F28A6457D00AB6289 /* ViewControllerViewModel.swift */; };
 		7177520128A3C24200048F98 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7177520028A3C24200048F98 /* CollectionViewCell.swift */; };
 		71C593FF28A3C12F00A64CDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C593FE28A3C12F00A64CDF /* AppDelegate.swift */; };
 		71C5940128A3C12F00A64CDF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C5940028A3C12F00A64CDF /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* Begin PBXFileReference section */
 		2D6EEC83E98611C8E86CB84C /* Pods-UICollectionViewDiffabledatasource.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UICollectionViewDiffabledatasource.debug.xcconfig"; path = "Target Support Files/Pods-UICollectionViewDiffabledatasource/Pods-UICollectionViewDiffabledatasource.debug.xcconfig"; sourceTree = "<group>"; };
 		3A641921FBF9AE813AADE275 /* Pods_UICollectionViewDiffabledatasource.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UICollectionViewDiffabledatasource.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71561C6F28A6457D00AB6289 /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		7177520028A3C24200048F98 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		71C593FB28A3C12F00A64CDF /* UICollectionViewDiffabledatasource.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UICollectionViewDiffabledatasource.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C593FE28A3C12F00A64CDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +52,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		71561C6D28A6453900AB6289 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				71561C6F28A6457D00AB6289 /* ViewControllerViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		71561C6E28A6455100AB6289 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				71C5940228A3C12F00A64CDF /* ViewController.swift */,
+				7177520028A3C24200048F98 /* CollectionViewCell.swift */,
+				71E1E35F28A3EF7100EEE053 /* HeaderVIew.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		71C593F228A3C12F00A64CDF = {
 			isa = PBXGroup;
 			children = (
@@ -73,11 +93,10 @@
 			isa = PBXGroup;
 			children = (
 				71C5940C28A3C13000A64CDF /* Info.plist */,
-				71C5940228A3C12F00A64CDF /* ViewController.swift */,
-				7177520028A3C24200048F98 /* CollectionViewCell.swift */,
-				71E1E35F28A3EF7100EEE053 /* HeaderVIew.swift */,
 				71E1E36628A3FC4800EEE053 /* Stroyboard */,
 				71E1E36528A3FC3B00EEE053 /* Delegate */,
+				71561C6E28A6455100AB6289 /* View */,
+				71561C6D28A6453900AB6289 /* ViewModel */,
 				71E1E36328A3FC1B00EEE053 /* Model */,
 			);
 			path = UICollectionViewDiffabledatasource;
@@ -253,6 +272,7 @@
 				71C5940328A3C12F00A64CDF /* ViewController.swift in Sources */,
 				71E1E35E28A3C53300EEE053 /* Data.swift in Sources */,
 				71C593FF28A3C12F00A64CDF /* AppDelegate.swift in Sources */,
+				71561C7028A6457D00AB6289 /* ViewControllerViewModel.swift in Sources */,
 				71E1E36228A3F92E00EEE053 /* Section.swift in Sources */,
 				71E1E36028A3EF7100EEE053 /* HeaderVIew.swift in Sources */,
 				7177520128A3C24200048F98 /* CollectionViewCell.swift in Sources */,

@@ -15,8 +15,7 @@ final class ViewController: UIViewController {
   var datasource: UICollectionViewDiffableDataSource<Section, Item>!
   
   var subscriptions = Set<AnyCancellable>()
-  let didSelect = PassthroughSubject<IndexPath, Never>()
-  @Published var sections: [Section] = Section.sections
+  var viewModel = ViewControllerViewModel(sections: Section.sections)
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,14 +25,7 @@ final class ViewController: UIViewController {
   }
   
   private func bind() {
-    didSelect
-      .receive(on: RunLoop.main)
-      .sink { [unowned self] indexPath in
-        sections[indexPath.section].datas.remove(at: indexPath.item)
-      }
-      .store(in: &subscriptions)
-    
-    $sections
+    viewModel.$sections
       .receive(on: RunLoop.main)
       .sink { [unowned self] in
         applySections($0)
@@ -129,6 +121,6 @@ extension ViewController {
 
 extension ViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    didSelect.send(indexPath)
+    viewModel.didSelect(at: indexPath)
   }
 }
